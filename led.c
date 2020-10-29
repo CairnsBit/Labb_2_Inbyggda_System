@@ -2,5 +2,5 @@
 #include "led.h"
 
 void LED_init() {
-	// ...
+	DDRB |= (1 << PB1);
 }

@@ -1,6 +1,7 @@
 #include <avr/io.h>
 #include <avr/pgmspace.h>
 #include <util/delay.h>
+#include <stdbool.h>
 
 #include <stdio.h>
 
@@ -10,10 +11,19 @@
 
 void main (void) {
 	uart_init();
+	LED_init();
+	timer_init();
 
-	while (1) {
-		/* remove this once you've verified it works */
-		printf_P(PSTR("Hello there\n"));
-		_delay_ms(1000);
+	int counter;
+
+	while (true) {
+		if(TIFR0 & (1 << OCF0A)) {
+			TIFR0 = (1 << OCF0A);
+			counter++;
+		}
+		if (counter==10) {
+			PORTB ^= (1 << PB1);
+			counter = 0;
+		}
 	}
 }
