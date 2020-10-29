@@ -5,10 +5,11 @@
 
 void timer_init() {
 
-	TCCR0A |= (1 << WGM01);
+	TCCR0A |= (1<< COM0A1) | (1 << WGM01) | (1<<WGM00);
 
-	TCCR0B |= (1 << CS02) | (1 << CS00);
+	TCCR0B |= (1 << CS01) | (1 << CS00);
 
-	OCR0A = 156; // Avrundat counter value som beräknades mha formeln: CPU Frequency / (Prescaler * Time rate) så 16000000/(1024*100) = 156.25
+	//För att beräkna  PWM-frekvens i det här fallet använder vi oss av formeln: CPU freq / (Prescaler * 256) så 16000000 / (64 * 256) = 976,5625
+
 }
 
